@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/cryptonSW/static/css/main.24e61346.chunk.css",
+    "main.js": "/cryptonSW/static/js/main.3b5fb2eb.chunk.js",
+    "main.js.map": "/cryptonSW/static/js/main.3b5fb2eb.chunk.js.map",
+    "runtime-main.js": "/cryptonSW/static/js/runtime-main.95fabd2f.js",
+    "runtime-main.js.map": "/cryptonSW/static/js/runtime-main.95fabd2f.js.map",
+    "static/js/2.fcf2ff77.chunk.js": "/cryptonSW/static/js/2.fcf2ff77.chunk.js",
+    "static/js/2.fcf2ff77.chunk.js.map": "/cryptonSW/static/js/2.fcf2ff77.chunk.js.map",
+    "static/js/3.4edcce84.chunk.js": "/cryptonSW/static/js/3.4edcce84.chunk.js",
+    "static/js/3.4edcce84.chunk.js.map": "/cryptonSW/static/js/3.4edcce84.chunk.js.map",
+    "index.html": "/cryptonSW/index.html",
+    "static/css/main.24e61346.chunk.css.map": "/cryptonSW/static/css/main.24e61346.chunk.css.map",
+    "static/js/2.fcf2ff77.chunk.js.LICENSE.txt": "/cryptonSW/static/js/2.fcf2ff77.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.95fabd2f.js",
+    "static/js/2.fcf2ff77.chunk.js",
+    "static/css/main.24e61346.chunk.css",
+    "static/js/main.3b5fb2eb.chunk.js"
+  ]
+}
