@@ -8,15 +8,15 @@ const Filter = props => {
     props.setFilter(e.target.value)
   }
   return (
-    <div className='filter'>
+    <div className="filter">
       <h1>Фильтрация</h1>
-      <div className='filter__block'>
-        <input type="text" className='filter__input' value={value} onChange={e => changeFilterValue(e)}></input>
-        <div className='filter__gender'>
+      <div className="filter__block">
+        <input type="text" className="filter__input" value={value} onChange={e => changeFilterValue(e)}></input>
+        <div className="filter__gender">
           <label>
             Любой
             <input
-              className='filter__checkbox'
+              className="filter__checkbox"
               type="checkbox"
               checked={props.gender === 'all'}
               onChange={e => {
@@ -28,7 +28,7 @@ const Filter = props => {
             Мужчина
             <input
               type="checkbox"
-              className='filter__checkbox'
+              className="filter__checkbox"
               checked={props.gender === 'male'}
               onChange={e => {
                 props.setGender('male')
@@ -39,7 +39,7 @@ const Filter = props => {
             Женщина
             <input
               type="checkbox"
-              className='filter__checkbox'
+              className="filter__checkbox"
               checked={props.gender === 'female'}
               onChange={e => {
                 props.setGender('female')
@@ -50,7 +50,7 @@ const Filter = props => {
             Другое
             <input
               type="checkbox"
-              className='filter__checkbox'
+              className="filter__checkbox"
               checked={props.gender === 'n/a'}
               onChange={e => {
                 props.setGender('n/a')

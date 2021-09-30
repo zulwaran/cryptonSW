@@ -1,26 +1,45 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-
-import HeroList from './HeroList'
 import { axiosDB } from '../../axios'
-import Filter from './Filter'
+
+//Components
+import HeroList from '../Reusable/HeroList'
+import Filter from '../Reusable/Filter'
+
+//Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilterAction, setGenderAction } from '../../actions/FilterActions'
+import { fetchHeroesArrAction, setFavoriteHeroIdAction, setIsGetDataAction } from '../../actions/HeroesActions'
 
 const MainContainer = () => {
   const dispatch = useDispatch()
-  const [isGetData, setIsGetData] = useState(false)
-  const [heroesArr, setHeroesArr] = useState([])
-  const [heroesArrFiltering, setHeroesArrFiltering] = useState(heroesArr)
+
+  const heroesArr = useSelector(state => state.heroes.heroesArr)
+  const fetchHeroesArr = array => {
+    dispatch(fetchHeroesArrAction(array))
+  }
+
+  const isGetData = useSelector(state => state.heroes.isGetData)
+  const setIsGetData = value => {
+    dispatch(setIsGetDataAction(value))
+  }
+
+  const favoriteHeroId = useSelector(state => state.heroes.favoriteHeroId)
+  const setFavoriteHeroId = value => {
+    dispatch(setFavoriteHeroIdAction(value))
+  }
 
   const filter = useSelector(state => state.filter.filter)
   const setFilter = filter => {
     dispatch(setFilterAction(filter))
   }
+
   const gender = useSelector(state => state.filter.gender)
   const setGender = gender => {
     dispatch(setGenderAction(gender))
   }
+
+  const [heroesArrFiltering, setHeroesArrFiltering] = useState(heroesArr)
 
   const heroFiltering = () => {
     let a = []
@@ -45,7 +64,7 @@ const MainContainer = () => {
     let homeworld = ''
     let img = ''
     let heroesArr = []
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 83; i++) {
       await axiosDB
         .get(`/people/${i}`)
         .then(response => {
@@ -53,6 +72,7 @@ const MainContainer = () => {
           gender = response.data.gender
         })
         .catch(error => {
+          console.log(error)
           name = 'unknown'
         })
       await axiosDB
@@ -61,6 +81,7 @@ const MainContainer = () => {
           homeworld = response.data.name
         })
         .catch(error => {
+          console.log(error)
           homeworld = 'unknown'
         })
       img = `https://starwars-visualguide.com/assets/img/characters/${i}.jpg`
@@ -73,8 +94,53 @@ const MainContainer = () => {
       }
       heroesArr = [...heroesArr, hero]
     }
-    setHeroesArr(heroesArr)
+    fetchHeroesArr(heroesArr)
     setHeroesArrFiltering(heroesArr)
+  }
+
+  const fetchLocaleStorage = () => {
+    let a = []
+    a = JSON.parse(localStorage.getItem('favorite')) || []
+    let idsArray = []
+    if (a.length !== 0) {
+      a.forEach(element => {
+        idsArray.push(element.id)
+      })
+      setFavoriteHeroId(idsArray)
+    }
+  }
+
+  const toggleFavorite = hero => {
+    let a = []
+    let idsArray = []
+    a = JSON.parse(localStorage.getItem('favorite')) || []
+    a.forEach(element => {
+      idsArray.push(element.id)
+    })
+    if (a.length === 0 || !idsArray.includes(hero.id)) {
+      addFavorite(a, hero)
+    } else {
+      deleteFavorite(a, hero)
+    }
+  }
+
+  const addFavorite = (a, hero) => {
+    a.push(hero)
+    localStorage.setItem('favorite', JSON.stringify(a))
+    setFavoriteHeroId([...favoriteHeroId, hero.id])
+    return
+  }
+  const deleteFavorite = (a, hero) => {
+    let idsArray = []
+    a = a.filter(elem => {
+      return elem.id !== hero.id
+    })
+    a.forEach(element => {
+      idsArray.push(element.id)
+    })
+    localStorage.setItem('favorite', JSON.stringify(a))
+    setFavoriteHeroId(idsArray)
+    return
   }
 
   useEffect(() => {
@@ -82,21 +148,27 @@ const MainContainer = () => {
       fetchHeroes()
       setIsGetData(true)
     }
+    fetchLocaleStorage()
     heroFiltering()
   }, [filter, gender])
 
-  if (heroesArrFiltering.length !== 0) {
+  if (heroesArr.length !== 0) {
     return (
       <div>
         <Filter heroFiltering={heroFiltering} gender={gender} setGender={setGender} setFilter={setFilter} />
-        <HeroList heroes={heroesArrFiltering} />
+        <HeroList
+          heroes={heroesArrFiltering}
+          favoriteHeroId={favoriteHeroId}
+          setFavoriteHeroId={setFavoriteHeroId}
+          toggleFavorite={toggleFavorite}
+        />
       </div>
     )
   } else {
     return (
       <div>
         <Filter heroFiltering={heroFiltering} gender={gender} setGender={setGender} setFilter={setFilter} />
-        <p>Star Wars Heroes Loading...</p>
+        <p className="containerText">Загружаем список персонажей...</p>
       </div>
     )
   }
