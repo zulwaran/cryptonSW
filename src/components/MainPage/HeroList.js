@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { AiTwotoneHeart } from 'react-icons/ai'
 import { useState } from 'react/cjs/react.development'
+import styles from './Main.css'
+
 
 const HeroList = props => {
   const [favoriteHeroId, setFavoriteHeroId] = useState([])
@@ -50,13 +52,13 @@ const HeroList = props => {
   }
 
   return (
-    <div>
+    <div className='hero'>
       {props.heroes.map(hero => {
         return (
-          <div key={hero.id}>
-            <img src={hero.img} alt="hero"></img>
-            <p>Имя: {hero.name}</p>
-            <p>Планета проживания: {hero.homeworld}</p>
+          <div key={hero.id} className='hero__card'>
+            <img src={hero.img} alt="hero" className='hero__card-img'></img>
+            <p className='hero__card-largeText'>Имя: {hero.name}</p>
+            <p className='hero__card-mediumText'>Планета проживания: {hero.homeworld}</p>
             <AiTwotoneHeart
               color={favoriteHeroId.includes(hero.id) ? 'red' : 'black'}
               onClick={() => toggleFavorite(hero)}
