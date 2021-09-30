@@ -1,0 +1,18 @@
+.navigation{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.navigation a{
+    color:#FFEE58;
+    text-decoration: none;
+}
+.navigation ul{
+    display: flex;
+}
+
+.navigation li{
+    margin-left: 30px;
+    font-size: 22px;
+}
